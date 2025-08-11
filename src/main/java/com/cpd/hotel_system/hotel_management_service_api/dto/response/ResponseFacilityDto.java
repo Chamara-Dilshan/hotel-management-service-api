@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 
 public class ResponseFacilityDto {
-	private Long id;
+	private long id;
 	private String name;
     private String roomId;
 
