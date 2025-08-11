@@ -4,11 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
 @Entity
@@ -40,4 +43,7 @@ public class Hotel {
 
     @Column(name = "starting_from")
     private BigDecimal startingFrom;
+
+    @OneToMany (mappedBy = "hotel", cascade = CascadeType.ALL)
+    private List<Branch> branches;
 }
