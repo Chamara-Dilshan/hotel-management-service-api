@@ -2,6 +2,11 @@ package com.cpd.hotel_system.hotel_management_service_api.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
@@ -16,6 +21,12 @@ import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "hotel")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+
 public class Hotel {
     
     @Id
