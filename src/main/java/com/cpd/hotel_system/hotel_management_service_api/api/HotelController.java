@@ -1,10 +1,17 @@
 package com.cpd.hotel_system.hotel_management_service_api.api;
 
+import java.sql.SQLException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.cpd.hotel_system.hotel_management_service_api.dto.request.RequestHotelDto;
 import com.cpd.hotel_system.hotel_management_service_api.service.HotelService;
@@ -29,4 +36,55 @@ public class HotelController {
                 HttpStatus.CREATED
         );
     }
+
+    @PutMapping("/admin/update/{id}")
+    public ResponseEntity<StandardResponseDto> update(
+            @PathVariable("id") String hotelId,
+            @RequestBody RequestHotelDto dto) throws SQLException {
+        hotelService.update(dto, hotelId);
+        return new ResponseEntity<>(
+                new StandardResponseDto(
+                        201, "Hotel Updated!",null
+                ),
+                HttpStatus.CREATED
+        );
+    }
+
+    @DeleteMapping("/host/delete/{id}")
+    public ResponseEntity<StandardResponseDto> delete(
+            @PathVariable("id") String hotelId) throws SQLException {
+        hotelService.delete(hotelId);
+        return new ResponseEntity<>(
+                new StandardResponseDto(
+                        204, "Hotel deleted!",null
+                ),
+                HttpStatus.NO_CONTENT
+        );
+    }
+
+    @GetMapping("/visitor/find-by-id/{id}")
+    public ResponseEntity<StandardResponseDto> findById(
+            @PathVariable("id") String hotelId) throws SQLException {
+        return new ResponseEntity<>(
+                new StandardResponseDto(
+                        200, "Hotel found!",hotelService.findById(hotelId)
+                ),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/visitor/find-all")
+    public ResponseEntity<StandardResponseDto> findAll(
+            @RequestParam String searchText,
+            @RequestParam int page,
+            @RequestParam int size
+    ) throws SQLException {
+        return new ResponseEntity<>(
+                new StandardResponseDto(
+                        200, "Hotel list!",hotelService.findAll(page,size,searchText)
+                ),
+                HttpStatus.OK
+        );
+    }
+
 }
